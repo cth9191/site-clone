@@ -74,3 +74,9 @@ Everything must be reversible by loading `?rx=base`.
 - *GPU-led* — hide the image, full-bleed GrainGradient/Dithering behind the type
 - *engraving* — regenerate the art as B/W line engraving, hard 2-column split
 - *product* — the cutout asset becomes the focal object, painting removed
+
+**Patch gotcha (Tailwind / utility sites):** font sizes usually live on the
+inner `<span>`s (`text-[64px]`), not the `h1`. A `h1 span { font-size: 108% }`
+patch *replaces* that with 108 % of the h1's 16 px base and collapses the
+headline. Scale display type via the `h1`'s own size or `letter-spacing` /
+`line-height`, never via child spans.
