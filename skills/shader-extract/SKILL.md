@@ -12,7 +12,7 @@ description: >-
   "reproduce this Three.js scene locally". NOT for ordinary DOM/CSS cloning
   (use dom-clone).
 argument-hint: "<url> | <locked surface: selector + rect + driver + output-dir>"
-user-invocable: true
+user-invocable: false
 ---
 
 # Shader Extract

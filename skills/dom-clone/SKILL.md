@@ -11,7 +11,7 @@ description: >-
   effects. Trigger on "rebuild this section", "extract the CSS/layout", "clone
   the markup and styling of this page", or the DOM half of a full site clone.
 argument-hint: "<url> | <output-dir with surface-map.json + ROUTING.md>"
-user-invocable: true
+user-invocable: false
 ---
 
 # DOM Clone

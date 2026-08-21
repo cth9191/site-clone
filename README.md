@@ -22,7 +22,7 @@
 
 ## What's in the box
 
-One repo, **four Claude Code skills**, one install. They're separate skills (each has its own `/command`) that chain into a pipeline:
+One repo, one install, **one command**. `/clone-site <url>` runs the whole pipeline: it clones, verifies, then asks *"make it yours now?"* and hands into `/remix-site`. Under the hood that is four skills — two of them (`dom-clone`, `shader-extract`) are internal tracks clone-site calls for you and are hidden from the `/` menu; `remix-site` is visible so you can re-enter it on an existing clone later.
 
 ```
  /clone-site <url>  ──▶  verified clone  ──▶  /remix-site <dir>  ──▶  your site
@@ -55,6 +55,7 @@ Restart Claude Code (or start a new session) after copying; the skills show up u
 
 ```
 /clone-site https://www.example.com/          # ~10–45 min → output/www.example.com/ + TEARDOWN.md + QA report
+# …clone-site ends with "Make it yours now?" — say yes and remix-site takes over, or later:
 /remix-site output/www.example.com/           # stops 3× for your input: brand brief → direction pick → panel
 ```
 

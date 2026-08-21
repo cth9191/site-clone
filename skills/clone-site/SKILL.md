@@ -250,10 +250,19 @@ or the build (spec right, builder wrong?) and fix at the source.
 
 ## Handoff
 
-End the report with: **"Clone verified. To make it yours: `/remix-site <output-dir>`"** —
-the remix skill consumes this run's TEARDOWN.md, tokens-*.json, motion.json, and
-site/ directly (re-skin → three directions → tweak panel). Do not start
-re-skinning here; clone-site ends at a verified copy.
+After the completion report, **ask one question and act on it**:
+
+> "Clone verified (diff numbers above). Make it yours now? — re-skin with your
+> brand/copy/assets, three design directions, tweak panel on the pick."
+
+- **Yes** → invoke the `remix-site` skill with this run's output directory
+  (`Skill: remix-site`, args `<output-dir>`). It consumes TEARDOWN.md,
+  tokens-*.json, motion.json, and site/ directly and stops for the user's input
+  at its own checkpoints. From the user's side the whole thing is one command.
+- **No / later** → end with: `/remix-site <output-dir>` re-enters at any time.
+
+Do not start re-skinning inside clone-site; clone-site ends at a verified copy
+and remix-site owns everything after.
 
 ## Guardrails
 
