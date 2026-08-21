@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 3,
+  "source": {
+    "url": "",
+    "canonicalUrl": "",
+    "route": "",
+    "viewport": { "width": 1440, "height": 900, "dpr": 1 },
+    "browser": "",
+    "backend": "",
+    "capturedAt": ""
+  },
+  "candidates": [],
+  "lockStatus": "unlocked",
+  "allowedLockStatus": ["unlocked", "provisional", "attributed", "locked"],
+  "allowedTruth": ["SOURCE", "PARTIAL", "GUESS"],
+  "targetSet": [],
+  "alternatives": [],
+  "effectBoundary": "surface-only",
+  "frameworkHypotheses": [],
+  "platformHypotheses": [],
+  "interactions": [],
+  "scopeRisk": "low",
+  "blockingUnknowns": [],
+  "nextProbe": {
+    "type": "",
+    "target": "",
+    "resolves": []
+  },
+  "evidence": [],
+  "gateDecision": {
+    "targetAttributed": false,
+    "targetLocked": false,
+    "requiredEvidence": {
+      "visualAttribution": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "targetSet": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "contextAndOwner": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "targetBoundSourceOrFramework": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "effectBoundary": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "primaryTraceRoute": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "alternativesExcluded": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ]
+    },
+    "blockers": [],
+    "decidedAt": ""
+  },
+  "truthNotes": {
+    "source": [],
+    "partial": [],
+    "guess": []
+  }
+}

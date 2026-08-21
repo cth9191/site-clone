@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 3,
+  "state": "INTAKE",
+  "gateStatus": {
+    "targetAttributed": false,
+    "targetLocked": false,
+    "replayReady": false,
+    "baselineVerified": false,
+    "projectVerified": false
+  },
+  "strategy": {
+    "primaryTraceRoute": "",
+    "replayRoute": "",
+    "toolProfile": ""
+  },
+  "attempts": [],
+  "targetSet": [],
+  "unknowns": {
+    "blocking": [],
+    "important": [],
+    "deferred": [],
+    "external": []
+  },
+  "evidenceIndex": [],
+  "allowedGateArtifactStatuses": ["missing", "incomplete", "passed", "blocked"],
+  "artifacts": {
+    "scoutCard": "scout-card.json",
+    "manifest": "replay-manifest.json",
+    "qaReport": "qa-report.md",
+    "knownGaps": "known-gaps.md"
+  },
+  "gateArtifacts": {
+    "targetAttribution": {
+      "artifact": "scout-card.json",
+      "status": "missing"
+    },
+    "targetLock": {
+      "artifact": "scout-card.json",
+      "status": "missing"
+    },
+    "replayReady": {
+      "artifact": "replay-manifest.json",
+      "status": "missing"
+    },
+    "baselineVerify": {
+      "artifact": "qa-report.md",
+      "status": "missing"
+    },
+    "projectVerify": {
+      "artifact": "qa-report.md",
+      "status": "missing"
+    }
+  },
+  "budgets": {
+    "sameStrategyMax": 2,
+    "captureStrategyCategoriesMax": 3,
+    "repairRoundsMax": 6,
+    "plateauRoundsMax": 2
+  },
+  "plateau": {
+    "roundsWithoutProgress": 0,
+    "lastProgress": ""
+  },
+  "nextAction": {
+    "state": "",
+    "unknown": "",
+    "action": "",
+    "expectedEvidence": ""
+  },
+  "replayTier": "",
+  "qa": {
+    "sourceToBaseline": [],
+    "baselineToEditable": []
+  }
+}

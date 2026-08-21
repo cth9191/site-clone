@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 3,
+  "source": {
+    "url": "",
+    "canonicalUrl": "",
+    "route": "",
+    "permissionBoundary": "public",
+    "allowedPermissionBoundaries": ["public", "user-authorized", "external-blocked"],
+    "viewport": { "width": 1440, "height": 900, "dpr": 1 }
+  },
+  "targetSurfaces": [],
+  "runtime": {
+    "backend": "",
+    "framework": "",
+    "platform": "",
+    "owner": ""
+  },
+  "renderGraph": {
+    "passes": [],
+    "framebuffers": [],
+    "dependencies": []
+  },
+  "resources": [],
+  "state": {
+    "gl": {},
+    "webgpu": {},
+    "canvas2d": {}
+  },
+  "timeline": {
+    "timeOrigin": "",
+    "unit": "",
+    "deltaRule": "",
+    "random": ""
+  },
+  "inputs": {
+    "pointer": null,
+    "scroll": null,
+    "resize": null,
+    "route": null
+  },
+  "output": {
+    "colorSpace": "",
+    "toneMapping": "",
+    "premultipliedAlpha": null,
+    "domComposite": ""
+  },
+  "pageBindings": [],
+  "routes": [],
+  "evidence": [],
+  "truth": {
+    "leafFacts": [],
+    "wiringFacts": [],
+    "defaultLabel": "GUESS",
+    "allowedTruth": ["SOURCE", "PARTIAL", "GUESS"]
+  },
+  "unknowns": {
+    "blocking": [],
+    "important": [],
+    "deferred": [],
+    "external": []
+  },
+  "replay": {
+    "route": "",
+    "allowedRoutes": ["SOURCE_REPLAY", "PIPELINE_REPLAY", "BEHAVIOR_REBUILD"],
+    "fidelityTier": "",
+    "fallbacks": []
+  },
+  "gateDecision": {
+    "replayReady": false,
+    "requiredEvidence": {
+      "targetSurfaces": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "runtimeOwnerBackend": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "renderGraphOrFallback": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "criticalResources": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "timelineAndInputs": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "outputComposite": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "truthLabels": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ],
+      "blockingUnknownsResolvedOrDowngraded": [
+        {
+          "status": "unknown",
+          "evidenceId": "",
+          "path": "",
+          "truth": "GUESS",
+          "notes": ""
+        }
+      ]
+    },
+    "blockers": [],
+    "decidedAt": ""
+  }
+}
