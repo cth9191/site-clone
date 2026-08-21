@@ -114,7 +114,7 @@ A clone is a *measured design system plus a proven structure* — and copying so
 
 - **Tokenize** — `tokenize-css.js` rewrites the clone's stylesheet so every measured value flows through `var(--rx-<role>, <original>)` (declarations only, never selectors — Tailwind arbitrary-value classes taught us that). Verified at **0.000 % round-trip diff**, so every knob is free.
 - **Re-skin** — the mandatory phase. Copy keeps the original's *shape* (headline lengths ±20 %, card counts), brand goes into the slots, decorative assets are regenerated from the original's *composition* (never identity — logos, people, product shots get replaced), licensed fonts swap for metric-compatible open pairs, analytics and endpoints are scrubbed.
-- **Directions** — three, not five. Each is a data-only overrides file (tokens + motion + shader props + assets) that differs from the others on ≥3 forks: palette mood, type pairing, hero treatment, density, motion personality, surface. Rendered as a contact sheet; you pick.
+- **Directions** — three, not five. Each is a data-only overrides file (tokens + motion + shader props + assets) that differs from the others on ≥3 forks: palette mood, type pairing, hero treatment, density, motion personality, surface. Rendered **live side by side** on a `/directions.html` gallery page (iframes of the dev server — real shaders, real motion, synced scroll, click-through fullscreen, a *pick* button); you pick.
 - **Tweak panel** — `tweak-panel.js` on the winner: grouped live controls for CSS vars, motion params, and shader props, state serialized into `#rx=` so every URL is a permalink, *Copy JSON* exports a new direction. Dev-only, toggled with the backtick key.
 
 ```

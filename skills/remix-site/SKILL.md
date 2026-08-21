@@ -127,9 +127,13 @@ per-direction hero assets only for the decorative layer.
 
 Apply each with `node scripts/apply-overrides.js <site> remix/directions/<slug>.json`
 (writes `remix-tokens.<slug>.css` + `remix-motion.<slug>.js`; the site loads
-the active set via `?rx=<slug>`). Render all three at 1440 and compose a
-side-by-side contact sheet (`remix/directions.png`). **Stop** with the sheet and
-one line per direction: thesis + what changed. The user picks.
+the active set via `?rx=<slug>`). Then `node scripts/gallery.js <site>` writes
+`<site>/directions.html`: all directions **live side by side in iframes** (real
+shaders + motion), synced scroll, click-a-name fullscreen, and a *pick* button
+that stores the choice in `localStorage.rx-pick`. Open it in the user's browser
+(this is the deliverable — not a static contact sheet), and also render
+`remix/directions.jpg` for the report. **Stop** with the URL and one line per
+direction: thesis + what changed. The user picks (read `rx-pick` or ask).
 
 ## Phase 3 — Tweak panel
 
