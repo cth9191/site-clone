@@ -48,3 +48,29 @@ the sheet is the data.
 - shaders: per-mount props; keep the library, change the props
 - assets: per key; generated files under `remix/generated/<slug>-*.ext`
 - `thesis` filled in
+
+## Amplitude — ask before deriving
+
+Ask the user first: **subtle / medium / big**, and **any aesthetics in mind?**
+
+| Amplitude | What moves | Files |
+|---|---|---|
+| subtle | palette, accent, motion timing, shader colors | `<slug>.json` |
+| medium | + radius/border/shadow, spacing scale, type scale + weights, grain | + `<slug>.patch.css` |
+| big | + hero treatment, layout (grid ↔ editorial ↔ bento), section order, nav style, own hero asset | + `<slug>.patch.js` + generated assets |
+
+Subtle side by side reads as "the same site in three coats" — say so when
+recommending; default to **medium** unless the user is exploring brand identity
+(then big). A direction file may declare `"amplitude": "medium"` explicitly.
+
+**Patch rules.** `patch.css` is scoped under `:root[data-rx="<slug>"]` and only
+*adds* rules. `patch.js` default-exports `function (rx) {}` and may reorder
+sections, swap a hero variant (e.g. hide the image layer, enlarge the headline),
+or add layout classes — never delete content, never touch the base files.
+Everything must be reversible by loading `?rx=base`.
+
+**Big-direction hero recipes for a photo-hero skeleton:**
+- *type-only* — hide the image + shader layers, headline to 2× size, one rule
+- *GPU-led* — hide the image, full-bleed GrainGradient/Dithering behind the type
+- *engraving* — regenerate the art as B/W line engraving, hard 2-column split
+- *product* — the cutout asset becomes the focal object, painting removed

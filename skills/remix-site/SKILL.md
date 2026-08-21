@@ -106,8 +106,26 @@ with your brand. Directions next?"
 
 ## Phase 2 — Three directions
 
+**Ask first, one batch, before touching anything** (this is the question that
+decides whether the directions are coats of paint or actually different sites):
+
+1. **Amplitude** — *subtle* / *medium* / *big*?
+   | | moves | layer |
+   |---|---|---|
+   | subtle | palette, accent, motion timing, shader colors | `overrides.json` only |
+   | medium | + surface (radius/border/shadow), density (spacing ×), type scale + weights, grain | + `patch.css` |
+   | big | + hero treatment (photo → type-only / GPU-led / engraving), layout (grid ↔ editorial ↔ bento), section order, nav style, own hero asset per direction | + `patch.js` + generated assets |
+   If unsure, recommend **medium** — subtle reads as "same site, different coat"
+   side by side; big costs generations.
+2. **Anchors** — "any aesthetics in mind?" *none* / *describe it* / *reference
+   sites or images* / *pull from my taste library* (`/taste-vault`). With none:
+   nearest-legit / opposite / wildcard from `references/directions.md`. With
+   anchors: one direction per anchor, built *toward* it, and say which fork each
+   anchor maps to so the user sees the translation.
+
 Not five. Five converge; three deliberately different forks give a real choice.
-Each direction is an **overrides file** — no code:
+Each direction is **data + an optional patch layer**, scoped to
+`:root[data-rx="<slug>"]` so directions never collide:
 
 ```
 remix/directions/<slug>.json
@@ -116,7 +134,13 @@ remix/directions/<slug>.json
   "motion": { "reveal": { "y": 22, "duration": 0.7, "ease": [.16,1,.3,1] }, "stagger": 0.08 },
   "shaders": { "hero": { "colorFront": "#…", "intensity": 0.5 } },
   "assets": { "hero-bg": "generated/<slug>-hero.jpg" } }
+remix/directions/<slug>.patch.css   (medium+)  surface / density / type scale under :root[data-rx="<slug>"]
+remix/directions/<slug>.patch.js    (big)      structural: hero variant, section order, layout classes
 ```
+
+`apply-overrides.js` picks up `<slug>.patch.css` / `.patch.js` next to the
+JSON automatically. Patches must be **additive and scoped** — never edit the
+base HTML/CSS for a direction, or the other two break.
 
 Derive the three from the original's *axes*, not from taste alone — see
 `references/directions.md` for the fork table (palette mood, type pairing, hero

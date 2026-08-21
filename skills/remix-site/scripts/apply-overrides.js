@@ -42,13 +42,19 @@ for (const [key, src] of Object.entries(ov.assets || {})) {
   assetMap[key] = `/assets/remix/${slug}/${path.basename(src)}`;
 }
 
+// optional patch layers (medium: css, big: js) — picked up if they sit next to the JSON
+const patchCss = ovPath.replace(/\.json$/, '.patch.css'), patchJs = ovPath.replace(/\.json$/, '.patch.js');
+const hasCss = fs.existsSync(patchCss), hasJs = fs.existsSync(patchJs);
+if (hasCss) fs.writeFileSync(path.join(out, `patch.${slug}.css`), fs.readFileSync(patchCss, 'utf8'));
+if (hasJs) fs.writeFileSync(path.join(out, `patch.${slug}.js`), fs.readFileSync(patchJs, 'utf8'));
+
 // motion / shaders patch
 fs.writeFileSync(path.join(out, `motion.${slug}.js`), `// direction: ${slug}\nexport default ${JSON.stringify({ motion: ov.motion || {}, shaders: ov.shaders || {}, assets: assetMap }, null, 1)};\n`);
 
 // registry
 const regPath = path.join(out, 'directions.json');
 const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : { active: 'base', directions: {} };
-reg.directions[slug] = { name: ov.name || slug, thesis: ov.thesis || '', tokens: `./tokens.${slug}.css`, motion: `./motion.${slug}.js`, assets: assetMap };
+reg.directions[slug] = { name: ov.name || slug, thesis: ov.thesis || '', amplitude: ov.amplitude || (hasJs ? 'big' : hasCss ? 'medium' : 'subtle'), tokens: `./tokens.${slug}.css`, motion: `./motion.${slug}.js`, patchCss: hasCss ? `./patch.${slug}.css` : null, patchJs: hasJs ? `./patch.${slug}.js` : null, assets: assetMap };
 if (flags.includes('--activate')) reg.active = slug;
 fs.writeFileSync(regPath, JSON.stringify(reg, null, 1));
 
@@ -64,6 +70,8 @@ if (!fs.existsSync(loader)) fs.writeFileSync(loader, `/**
 import registry from './directions.json';
 const tokenSheets = import.meta.glob('./tokens.*.css', { query: '?inline', import: 'default', eager: true }) as Record<string, string>;
 const motionMods = import.meta.glob('./motion.*.js', { import: 'default', eager: true }) as Record<string, any>;
+const patchSheets = import.meta.glob('./patch.*.css', { query: '?inline', import: 'default', eager: true }) as Record<string, string>;
+const patchMods = import.meta.glob('./patch.*.js', { import: 'default', eager: true }) as Record<string, any>;
 
 const params = new URLSearchParams(location.search);
 const slug = params.get('rx') || localStorage.getItem('rx') || (registry as any).active || 'base';
@@ -77,6 +85,12 @@ if (slug !== 'base') {
   const m = motionMods[\`./motion.\${slug}.js\`];
   if (m) { rx.motion = m.motion || {}; rx.shaders = m.shaders || {}; rx.assets = m.assets || {}; }
   for (const [key, url] of Object.entries(rx.assets)) document.querySelectorAll<HTMLImageElement>(\`[data-rx-asset="\${key}"]\`).forEach((img) => { img.src = url as string; img.removeAttribute('srcset'); });
+  // medium: scoped CSS patch (surface / density / type scale)
+  const pc = patchSheets[\`./patch.\${slug}.css\`];
+  if (pc) { const st = document.createElement('style'); st.id = 'rx-patch'; st.textContent = pc; document.head.appendChild(st); }
+  // big: structural DOM patch — export default function (rx) { ... }
+  const pj = patchMods[\`./patch.\${slug}.js\`];
+  if (typeof pj === 'function') { const run = () => pj(rx); document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run) : run(); }
 }
 // live patch API used by the tweak panel: { tokens?, motion?, shaders? }
 rx.apply = (patch: any) => {
