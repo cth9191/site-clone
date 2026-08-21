@@ -1,0 +1,14 @@
+{ "name": "dither-mono", "amplitude": "medium",
+  "thesis": "taste-vault › Dither Mono: stark black-and-white, the hero dithered to near 1-bit, serif display carrying full authority, hard hairlines, grain everywhere, no color anywhere.",
+  "tokens": {
+    "--rx-color-bg": "#f7f7f4", "--rx-color-text": "#111111", "--rx-color-6": "#ededea", "--rx-color-5": "#111111",
+    "--rx-color-2": "#5a5a58", "--rx-color-7": "#8a8a88", "--rx-color-9": "#111111", "--rx-color-4": "#111111", "--rx-color-13": "#e4e4e0", "--rx-color-14": "#111111",
+    "--font-sans": "var(--font-instrument-serif), ui-serif, Georgia, serif"
+  },
+  "motion": { "reveal": { "y": 10, "duration": 0.5, "ease": [0.2, 0, 0, 1], "x": 24 }, "stagger": 0.06 },
+  "shaders": { "hero": { "colorFront": "#ffffff", "contrast": 0.45, "roughness": 0.4, "drops": 0.5, "crumples": 0.15, "crumpleSize": 0.12 },
+               "publish": { "colors": ["#111111", "#ffffff", "#555555", "#000000"], "bg": "#000000", "noise": 1, "speed": 0.6, "intensity": 0.7 },
+               "meter": { "colors": ["#000000", "#ffffff", "#333333"], "bg": "#000000", "noise": 1, "speed": 0.6, "intensity": 0.6 },
+               "compose": { "colors": ["#ffffff", "#000000", "#777777"], "bg": "#000000", "noise": 1, "speed": 0.6 },
+               "dither": { "colorFront": "#ffffff", "size": 7 } }
+}

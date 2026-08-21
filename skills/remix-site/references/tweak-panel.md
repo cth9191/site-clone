@@ -4,10 +4,31 @@ Built on the picked direction only. 10–15 knobs. The test for including one:
 *would the user change this twice in the next hour?* Accent yes; the 7th
 spacing step no.
 
+## The --p-* pattern (how a patch becomes tweakable)
+
+A knob can only drive what is already a variable. So when you write a
+direction's `patch.css`, declare every decision as a `--p-*` custom property
+with its default in the `:root[data-rx="<slug>"]` block, and reference it in
+the rules (`filter: grayscale(var(--p-hero-gray)) contrast(var(--p-hero-contrast))`).
+The panel then sets `--p-*` on `:root` live. Validated pattern: hero processing
+(gray/contrast/brightness/invert/blur), overlay gradient (alpha/angle/reach),
+scanlines, figure transform (scale/x/y/opacity), grain opacity, grid
+size/alpha, hairline weight/style, radius, shadow, display tracking/leading/
+weight, body leading, section rhythm multiplier, content max-width, CTA colors,
+footer colors. Use `zoom` (not `transform: scale`) for display scale so the
+layout reflows.
+
+"Aggressive" is fine — 60–80 knobs is workable **if** they are grouped
+(Color / Type / Space / Hero / Texture / Motion / GPU / Footer), searchable,
+and every group can collapse. The panel ships with a filter box, presets,
+collapse-all, shuffle-within-ranges, right-click-to-reset per knob,
+double-click a value to type it, and a resize grip.
+
 ## panel.json schema
 
 ```json
-{ "title": "Night Signal",
+{ "title": "Night Signal", "slug": "night-signal",
+  "presets": { "as picked": {}, "inverted": { "--rx-color-bg": "#0a0a0a", "--p-hero-invert": 1 } },
   "knobs": [
     { "id": "--rx-color-1",            "label": "Accent",          "group": "Color",  "type": "color",  "default": "#1f3bff" },
     { "id": "--rx-color-bg",           "label": "Page",            "group": "Color",  "type": "color",  "default": "#ffffff" },
@@ -29,6 +50,9 @@ spacing step no.
   at import), and shader mounts must listen for `rx:change` and re-render
   with the new props. Hoist both during Phase 0 if the clone didn't.
 - Groups render as collapsible sections in the given order.
+- `slug` (optional): the panel only mounts when that direction is active.
+- `presets`: named partial states layered on the direction; keys are knob ids.
+- `labels` on a select: display names parallel to `options` (use for font stacks).
 
 ## Wiring
 
