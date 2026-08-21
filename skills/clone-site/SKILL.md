@@ -248,6 +248,13 @@ or the build (spec right, builder wrong?) and fix at the source.
 - Known gaps (cross-origin canvases that blocked readback, effects only
   approximated, anything the surface map flagged CANVAS_UNKNOWN)
 
+## Handoff
+
+End the report with: **"Clone verified. To make it yours: `/remix-site <output-dir>`"** —
+the remix skill consumes this run's TEARDOWN.md, tokens-*.json, motion.json, and
+site/ directly (re-skin → three directions → tweak panel). Do not start
+re-skinning here; clone-site ends at a verified copy.
+
 ## Guardrails
 
 Clone for migration, recovery of your own lost source, or learning how a build

@@ -84,7 +84,7 @@ Copy the three skill folders into your Claude Code skills directory:
 
 ```bash
 git clone https://github.com/cth9191/site-clone.git
-cp -r site-clone/skills/* ~/.claude/skills/
+cp -r site-clone/skills/* ~/.claude/skills/   # clone-site, dom-clone, shader-extract, remix-site
 ```
 
 Requirements: a browser you can drive from the session — the [`playwright-cli`](https://github.com/microsoft/playwright-cli) skill is recommended (it's the only path with init-script preload, which makes routing and motion capture far more reliable), or any Playwright / Chrome MCP. Node ≥ 18 for the QA harness.
@@ -98,6 +98,29 @@ Requirements: a browser you can drive from the session — the [`playwright-cli`
 ```
 
 Or just ask: *"how did they build this?"*, *"tear down this site"*, *"clone this but the hero is some WebGL thing"*.
+
+## Then make it yours: `/remix-site`
+
+A clone is a *measured design system plus a proven structure* — and copying someone's site is not the point. `remix-site` is the step after the clone is verified. It consumes the clone's `TEARDOWN.md`, `tokens-*.json`, `motion.json`, and `site/` (never re-probes) and runs three phases that each stop for your call:
+
+```
+ ┌────────────────┐   ┌────────────────┐   ┌──────────────────┐   ┌─────────────────┐
+ │ 0. TOKENIZE    │ → │ 1. RE-SKIN     │ → │ 2. 3 DIRECTIONS  │ → │ 3. TWEAK PANEL  │
+ │ literals →     │   │ copy · brand · │   │ overrides files, │   │ 10–15 live      │
+ │ var(--rx-*)    │   │ assets · fonts │   │ side-by-side     │   │ knobs, permalink│
+ │ 0.000% diff    │   │ → template     │   │ sheet → you pick │   │ on the pick     │
+ └────────────────┘   └────────────────┘   └──────────────────┘   └─────────────────┘
+```
+
+- **Tokenize** — `tokenize-css.js` rewrites the clone's stylesheet so every measured value flows through `var(--rx-<role>, <original>)` (declarations only, never selectors — Tailwind arbitrary-value classes taught us that). Verified at **0.000 % round-trip diff**, so every knob is free.
+- **Re-skin** — the mandatory phase. Copy keeps the original's *shape* (headline lengths ±20 %, card counts), brand goes into the slots, decorative assets are regenerated from the original's *composition* (never identity — logos, people, product shots get replaced), licensed fonts swap for metric-compatible open pairs, analytics and endpoints are scrubbed.
+- **Directions** — three, not five. Each is a data-only overrides file (tokens + motion + shader props + assets) that differs from the others on ≥3 forks: palette mood, type pairing, hero treatment, density, motion personality, surface. Rendered as a contact sheet; you pick.
+- **Tweak panel** — `tweak-panel.js` on the winner: grouped live controls for CSS vars, motion params, and shader props, state serialized into `#rx=` so every URL is a permalink, *Copy JSON* exports a new direction. Dev-only, toggled with the backtick key.
+
+```
+/remix-site output/www.example.com/
+/remix-site output/www.example.com/ --phase panel
+```
 
 ## Case studies
 
