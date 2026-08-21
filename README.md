@@ -34,8 +34,8 @@ One repo, one install, **one command**. `/clone-site <url>` runs the whole pipel
 | Skill | Command | What it does | Needs |
 |---|---|---|---|
 | **clone-site** | `/clone-site <url> [--analyze-only]` | The coordinator. Probes the live page, writes `TEARDOWN.md`, routes DOM vs GPU, builds, runs the pixel diff. | `dom-clone`, `shader-extract`, a browser tool |
-| **dom-clone** | `/dom-clone <url\|dir>` | The DOM/CSS track: exact computed values → specs → components. Usually driven by clone-site; usable alone for pages with no GPU effects. | a browser tool |
-| **shader-extract** | `/shader-extract <url\|surface>` | The GPU track: evidence-gated capture/replay of one WebGL/WebGPU/canvas surface. Wraps the MIT [web-shader-extractor](https://github.com/lixiaolin94/skills). | a browser tool |
+| **dom-clone** *(internal)* | — | The DOM/CSS track: exact computed values → specs → components. Called by clone-site; hidden from the menu. |\|dir>` | The DOM/CSS track: exact computed values → specs → components. Usually driven by clone-site; usable alone for pages with no GPU effects. | a browser tool |
+| **shader-extract** *(internal)* | — | The GPU track\|surface>` | The GPU track: evidence-gated capture/replay of one WebGL/WebGPU/canvas surface. Wraps the MIT [web-shader-extractor](https://github.com/lixiaolin94/skills). | a browser tool |
 | **remix-site** | `/remix-site <clone-dir> [--phase …]` | The step after a verified clone: tokenize → re-skin (your brand/copy/assets) → three directions (asks *subtle/medium/big* + anchors) → live gallery → tweak panel. | a clone-site output dir (or any Vite site + one probe run) |
 
 **Install everything** (recommended — clone-site won't run without its two sub-skills):
