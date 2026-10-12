@@ -5,13 +5,13 @@ description: >-
   brand, copy, and assets; generate three deliberately different design
   directions as token/motion/shader overrides and render them side by side;
   then put a live tweak panel on the direction you pick. This is the step after
-  /clone-site — it consumes the clone's TEARDOWN.md, tokens-*.json, motion.json,
-  and site/ and never re-probes. Use when the user says "/remix", "remix this
-  clone", "make this mine", "re-skin this", "give me three versions of this
-  site", "variations of this design", "add a tweak panel", "let me tune the
-  colors/spacing/motion", or has just approved a clone and wants to move from
-  copying to owning. NOT for cloning (use /clone-site) and NOT for building a
-  site from scratch.
+  clone-site — it consumes the clone's TEARDOWN.md, tokens-*.json, motion.json,
+  and site/ and never re-probes. Use when the user says "remix-site", "/remix",
+  "remix this clone", "make this mine", "re-skin this", "give me three versions
+  of this site", "variations of this design", "add a tweak panel", "let me tune
+  the colors/spacing/motion", or has just approved a clone and wants to move from
+  copying to owning. NOT for cloning (use clone-site) and NOT for building a site
+  from scratch.
 argument-hint: "<clone-dir or site-dir> [--phase reskin|directions|panel]"
 user-invocable: true
 ---
@@ -22,7 +22,7 @@ A clone is a **measured design system plus a proven structure**. The teardown
 already enumerated every knob — palette, type scale, spacing rhythm, motion
 params, shader props, section order. Remixing means changing what flows
 through those knobs, in three phases that each **stop for the user's call**
-(unlike `/clone-site`, which runs autonomously):
+(unlike `clone-site`, which runs autonomously):
 
 1. **Re-skin** — swap the three things that make it *theirs*: copy, brand, hero
    assets. Output: a de-branded template. Non-negotiable and first.

@@ -63,7 +63,7 @@ you cannot substitute the DOM track for a GPU surface or vice versa.
    only path with `addInitScript` preload, which makes surface routing and
    motion capture far more reliable; see `references/playwright-cli-recipes.md`
    for the one-call preload recipe, eval quirks, hidden-state capture, asset
-   lists), Playwright MCP, Chrome/Claude-in-Chrome MCP, or a built-in browser
+   lists), Playwright MCP, a Chrome browser MCP, or a built-in browser
    pane with a JavaScript-eval tool (post-hoc probes + screenshots only, no
    preload). If none can load the target (bot wall, auth), stop and say so —
    this skill cannot clone from a fetch or a screenshot.
@@ -259,7 +259,8 @@ After the completion report, **ask one question and act on it**:
   (`Skill: remix-site`, args `<output-dir>`). It consumes TEARDOWN.md,
   tokens-*.json, motion.json, and site/ directly and stops for the user's input
   at its own checkpoints. From the user's side the whole thing is one command.
-- **No / later** → end with: `/remix-site <output-dir>` re-enters at any time.
+- **No / later** → end with: `remix-site <output-dir>` re-enters at any time
+  (Claude Code users can use `/remix-site <output-dir>`).
 
 Do not start re-skinning inside clone-site; clone-site ends at a verified copy
 and remix-site owns everything after.
