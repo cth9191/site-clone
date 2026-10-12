@@ -7,9 +7,9 @@
  ╚══════╝╚═╝   ╚═╝   ╚══════╝     ╚═════╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝
 ```
 
-**Point Claude Code at a URL. Get back a teardown doc and a verified, near pixel-identical rebuild.**
+**Point Claude Code or Codex at a URL. Get back a teardown doc and a verified, near pixel-identical rebuild.**
 
-`/clone-site https://some.site/` → measures the live page in a real browser, explains every effect with its exact runtime parameters, rebuilds it, then proves the result with an automated pixel diff against the original.
+Ask for `clone-site https://some.site/` (or use `/clone-site https://some.site/` in Claude Code) and the skill measures the live page in a real browser, explains every effect with its exact runtime parameters, rebuilds it, then proves the result with an automated pixel diff against the original.
 
 ```
 @1440: orig 8791px clone 8791px | mean 0.00% worst 0.00%
@@ -22,36 +22,65 @@
 
 ## What's in the box
 
-One repo, one install, **one command**. `/clone-site <url>` runs the whole pipeline: it clones, verifies, then asks *"make it yours now?"* and hands into `/remix-site`. Under the hood that is four skills — two of them (`dom-clone`, `shader-extract`) are internal tracks clone-site calls for you and are hidden from the `/` menu; `remix-site` is visible so you can re-enter it on an existing clone later.
+One repo. One install. One workflow that works in both Claude Code and Codex.
+
+`clone-site <url>` runs the whole pipeline: it clones, verifies, then asks *"make it yours now?"* and hands into `remix-site`. In Claude Code you can use the slash form, `/clone-site <url>`. In Codex, name the skill in plain language, for example: *"Use clone-site to clone https://example.com."*
+
+Under the hood there are four skills. Two of them, `dom-clone` and `shader-extract`, are internal tracks that `clone-site` calls for you. `remix-site` is user-facing so you can come back to an existing clone later.
 
 ```
- /clone-site <url>  ──▶  verified clone  ──▶  /remix-site <dir>  ──▶  your site
+ clone-site <url>  ──▶  verified clone  ──▶  remix-site <dir>  ──▶  your site
       │                                            │
       ├─ dom-clone       (DOM/CSS track)           ├─ tokenize → re-skin → 3 directions → tweak panel
       └─ shader-extract  (WebGL/canvas track)      └─ reads the clone's TEARDOWN / tokens / motion / site
 ```
 
-| Skill | Command | What it does | Needs |
+| Skill | How to invoke | What it does | Needs |
 |---|---|---|---|
-| **clone-site** | `/clone-site <url> [--analyze-only]` | The coordinator. Probes the live page, writes `TEARDOWN.md`, routes DOM vs GPU, builds, runs the pixel diff. | `dom-clone`, `shader-extract`, a browser tool |
-| **dom-clone** *(internal)* | — | The DOM/CSS track: exact computed values → specs → components. Called by clone-site; hidden from the menu. |\|dir>` | The DOM/CSS track: exact computed values → specs → components. Usually driven by clone-site; usable alone for pages with no GPU effects. | a browser tool |
-| **shader-extract** *(internal)* | — | The GPU track\|surface>` | The GPU track: evidence-gated capture/replay of one WebGL/WebGPU/canvas surface. Wraps the MIT [web-shader-extractor](https://github.com/lixiaolin94/skills). | a browser tool |
-| **remix-site** | `/remix-site <clone-dir> [--phase …]` | The step after a verified clone: tokenize → re-skin (your brand/copy/assets) → three directions (asks *subtle/medium/big* + anchors) → live gallery → tweak panel. | a clone-site output dir (or any Vite site + one probe run) |
+| **clone-site** | `clone-site <url> [--analyze-only]` or `/clone-site <url>` in Claude Code | The coordinator. Probes the live page, writes `TEARDOWN.md`, routes DOM vs GPU, builds, runs the pixel diff. | `dom-clone`, `shader-extract`, a browser tool |
+| **dom-clone** *(internal)* | Called by `clone-site` | The DOM/CSS track: exact computed values → specs → components. Usually driven by `clone-site`; usable alone for pages with no GPU effects. | a browser tool |
+| **shader-extract** *(internal)* | Called by `clone-site` | The GPU track: evidence-gated capture/replay of one WebGL/WebGPU/canvas surface. Wraps the MIT [web-shader-extractor](https://github.com/lixiaolin94/skills). | a browser tool |
+| **remix-site** | `remix-site <clone-dir> [--phase ...]` or `/remix-site <clone-dir>` in Claude Code | The step after a verified clone: tokenize → re-skin (your brand/copy/assets) → three directions (asks *subtle/medium/big* + anchors) → live gallery → tweak panel. | a clone-site output dir, or any Vite site plus one probe run |
 
-**Install everything** (recommended — clone-site won't run without its two sub-skills):
+## Install
+
+Install all four skills together. This is recommended because `clone-site` depends on `dom-clone` and `shader-extract`, and `remix-site` reuses the clone probe scripts when it starts from an existing site.
+
+**Claude Code:**
 
 ```bash
 git clone https://github.com/cth9191/site-clone.git
+mkdir -p ~/.claude/skills
 cp -r site-clone/skills/* ~/.claude/skills/
 ```
 
+**Codex, user-scoped:**
+
+```bash
+git clone https://github.com/cth9191/site-clone.git
+mkdir -p ~/.codex/skills
+cp -r site-clone/skills/* ~/.codex/skills/
+```
+
+**Codex, repo-scoped:**
+
+```bash
+mkdir -p .codex/skills
+cp -r skills/* .codex/skills/
+```
+
+Use repo-scoped install when you want the skills available only inside one project. Use user-scoped install when you want them available everywhere.
+
 **Install selectively:** copy only the folders you want. Minimum viable sets:
+
 - Teardowns only (`--analyze-only`): `clone-site` + `dom-clone` + `shader-extract`
 - Remix a site you already have: `remix-site` + `clone-site` (remix borrows clone-site's probe scripts when there's no teardown)
 
-Restart Claude Code (or start a new session) after copying; the skills show up under `/`.
+Restart Claude Code or Codex after copying. Claude Code users can use the slash commands. Codex users can name the skill in the request or ask naturally; the skill descriptions are written to trigger on phrases like *"clone this site"*, *"tear down this page"*, and *"make this mine"*.
 
-**Typical session:**
+## Use
+
+**Typical Claude Code session:**
 
 ```
 /clone-site https://www.example.com/          # ~10–45 min → output/www.example.com/ + TEARDOWN.md + QA report
@@ -59,7 +88,15 @@ Restart Claude Code (or start a new session) after copying; the skills show up u
 /remix-site output/www.example.com/           # stops 3× for your input: brand brief → direction pick → panel
 ```
 
-Each skill also triggers on plain language (*"how did they build this?"*, *"make this mine"*, *"give me three versions"*), so you rarely need the slash form.
+**Typical Codex session:**
+
+```text
+Use clone-site to clone https://www.example.com/
+Use clone-site to analyze https://www.example.com/ with --analyze-only
+Use remix-site on output/www.example.com/
+```
+
+Short requests work. Longer requests help. The best prompt usually gives the URL, the desired output, and any limits: *"Use clone-site to rebuild https://www.example.com as a local Vite site. Keep it faithful first, then ask before remixing."*
 
 ## Why this exists
 
@@ -119,21 +156,13 @@ GPU surfaces go to **`shader-extract`** (evidence-gated capture/replay via Spect
 
 **5. QA** — Playwright + pixelmatch, original vs clone at 1440 / 768 / 390, GPU canvases masked, diffed per viewport slice so the report says *where* it's wrong (`y=19800 16%`), not just that it is. Section heights are compared first; a zero delta down the list localizes any remaining diff to behavior, not layout.
 
-## Install
+## Requirements
 
-See **What's in the box** above — one `cp -r`, all four skills. Requirements: a browser you can drive from the session (the [`playwright-cli`](https://github.com/microsoft/playwright-cli) skill is recommended; any Playwright / Chrome MCP works with fewer features), Node ≥ 18 for the QA harness, and the Higgsfield MCP only if you want remix-site to generate replacement assets.
+You need a browser the agent can drive. The [`playwright-cli`](https://github.com/microsoft/playwright-cli) skill is recommended because it supports preload scripts, which makes surface routing and motion capture more reliable. Any Playwright or Chrome MCP can still work with fewer features.
 
-## Use
+You also need Node >= 18 for the QA harness. Higgsfield MCP is optional; it is only used when `remix-site` generates replacement assets.
 
-```
-/clone-site https://www.example.com/
-/clone-site https://www.example.com/ --analyze-only
-/site-teardown https://www.example.com/          # alias
-```
-
-Or just ask: *"how did they build this?"*, *"tear down this site"*, *"clone this but the hero is some WebGL thing"*.
-
-## Then make it yours: `/remix-site`
+## Then make it yours: `remix-site`
 
 A clone is a *measured design system plus a proven structure* — and copying someone's site is not the point. `remix-site` is the step after the clone is verified. It consumes the clone's `TEARDOWN.md`, `tokens-*.json`, `motion.json`, and `site/` (never re-probes) and runs three phases that each stop for your call:
 
@@ -152,9 +181,11 @@ A clone is a *measured design system plus a proven structure* — and copying so
 - **Tweak panel** — `tweak-panel.js` on the winner: grouped live controls for CSS vars, motion params, and shader props, state serialized into `#rx=` so every URL is a permalink, *Copy JSON* exports a new direction. Dev-only, toggled with the backtick key.
 
 ```
-/remix-site output/www.example.com/
-/remix-site output/www.example.com/ --phase panel
+remix-site output/www.example.com/
+remix-site output/www.example.com/ --phase panel
 ```
+
+In Claude Code, the slash forms work too: `/remix-site output/www.example.com/` and `/remix-site output/www.example.com/ --phase panel`.
 
 ## Case studies
 
